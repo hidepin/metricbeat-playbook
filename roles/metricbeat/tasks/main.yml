@@ -5,26 +5,28 @@
 
 - block:
   - name: enable elastic repo
-    copy: >
-      src=elastic.repo
-      dest=/etc/yum.repos.d/elastic.repo
-      owner=root
-      group=root
-      mode=0644
-      backup=yes
+    copy:
+      src: elastic.repo
+      dest: /etc/yum.repos.d/elastic.repo
+      owner: root
+      group: root
+      mode: 0644
+      backup: yes
     register: is_elastic_repo_setting
 
   - name: metricbeat install
-    package: name=metricbeat state=latest
+    package:
+      name: metricbeat
+      state: latest
 
   - name: metricbeat setting
-    template: >
-      src=metricbeat.yml.j2
-      dest=/etc/metricbeat/metricbeat.yml
-      owner=root
-      group=root
-      mode=0644
-      backup=yes
+    template:
+      src: metricbeat.yml.j2
+      dest: /etc/metricbeat/metricbeat.yml
+      owner: root
+      group: root
+      mode: 0644
+      backup: yes
     register: is_metricbeat_setting
     notify: metricbeat restart
 
@@ -38,4 +40,8 @@
       loop_var: backup_item
 
 - name: enable metricbeat service
-  service: name=metricbeat state=started enabled=yes daemon_reload=yes
+  service:
+    name: metricbeat
+    state: started
+    enabled: yes
+    daemon_reload: yes
