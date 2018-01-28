@@ -1,3 +1,3 @@
 ---
 # file: site.yml
-- include: all.yml
+- include_playbook: all.yml
