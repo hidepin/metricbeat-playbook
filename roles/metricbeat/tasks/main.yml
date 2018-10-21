@@ -30,12 +30,24 @@
     register: is_metricbeat_setting
     notify: metricbeat restart
 
+  - name: metricbeat system setting
+    copy:
+      src: system.yml
+      dest: /etc/metricbeat/modules.d/system.yml
+      owner: root
+      group: root
+      mode: 0644
+      backup: yes
+    register: is_system_setting
+    notify: metricbeat restart
+
   always:
   - name: metricbeat common backup settings
     include_tasks: backup.yml
     with_flattened:
       - "{{ is_elastic_repo_setting|default() }}"
       - "{{ is_metricbeat_setting|default() }}"
+      - "{{ is_system_setting|default() }}"
     loop_control:
       loop_var: backup_item
 
