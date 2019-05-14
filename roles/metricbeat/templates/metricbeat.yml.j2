@@ -95,6 +95,9 @@ output.elasticsearch:
 ###  hosts: ["localhost:9200"]
   hosts: [ {{ elasticsearch_node|join(', ') }} ]
 
+  # Set gzip compression level.
+  compression_level: 6
+
   # Optional protocol and basic auth credentials.
   #protocol: "https"
   #username: "elastic"
